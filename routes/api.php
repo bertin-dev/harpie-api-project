@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\API\UserController;
+use \App\Http\Controllers\API\ForgetController;
+use \App\Http\Controllers\API\ResetController;
 
 
 /*
@@ -22,8 +24,11 @@ use \App\Http\Controllers\API\UserController;
 
 
 //open Routes
-Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+
+Route::post('/forgetpassword', [ForgetController::class, 'forgetpassword']);
+Route::post('/resetpassword', [ResetController::class, 'resetpassword']);
 
 
 //protected Routes
@@ -32,8 +37,10 @@ Route::group([
 
 ], function(){
 
-      Route::get("profile", [UserController::class, 'profile']);
-      Route::get("logout", [UserController::class, 'logout']);
+      Route::get("/profile", [UserController::class, 'profile']);
+      Route::get("/logout", [UserController::class, 'logout']);
+      Route::put("/updateuser", [UserController::class, 'updateUser']);
+    
 });
 
 

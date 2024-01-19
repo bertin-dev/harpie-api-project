@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resquest;
 use Illuminate\Support\Facades\validator;
 use Auth;
+use DB;
 
 class UserController extends Controller
 {
@@ -80,5 +79,44 @@ class UserController extends Controller
             "message" => "User Logged out"
         ]);
      }
+
+     public function updateUser(Request $request)
+     {
+           //Data validation
+           $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+           
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $user = Auth::user();
+        $email = $user->email;
+
+
+        try {
+
+            DB::table('users')->where('email', $email)->update([
+                'name' => $request->name ?? $user->name,
+                'email' => $request->email ?? $user->email
+                
+            ]);
+
+            return response()->json([
+                "status" => true,
+                'message' => 'User account updated successfully'
+            ]);  
+            
+        }catch (Exception $exception) {
+            return response()->json([
+                "Message" => $exception->getMessage()
+               
+            ], 401);
+
+     }
+  }
 
 }
