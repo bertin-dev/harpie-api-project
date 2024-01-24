@@ -35,7 +35,7 @@ class UserController extends Controller
         //creating the user or saving the user
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->accessToken;
-        $success['name'] = $user->name;
+        $success['user'] = $user;
 
         return $this->sendResponse($success, 'User created successfully.');
 
@@ -50,7 +50,7 @@ class UserController extends Controller
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
             $success['token'] = $user->createToken('MyApp')->accessToken;
-            $success['name'] = $user->name;
+            $success['user'] = $user;
             
             return $this->sendResponse($success, 'User login successfully.');
 

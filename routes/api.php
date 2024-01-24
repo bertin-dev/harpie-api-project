@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\API\UserController;
 use \App\Http\Controllers\API\ForgetController;
 use \App\Http\Controllers\API\ResetController;
+use App\Http\Controllers\SubscriptionController;
 
 
 /*
@@ -31,6 +32,7 @@ Route::post('/forgetpassword', [ForgetController::class, 'forgetpassword']);
 Route::post('/resetpassword', [ResetController::class, 'resetpassword']);
 
 
+
 //protected Routes
 Route::group([
     "middleware" => ["auth:api"]
@@ -40,6 +42,7 @@ Route::group([
       Route::get("/profile", [UserController::class, 'profile']);
       Route::get("/logout", [UserController::class, 'logout']);
       Route::put("/updateuser", [UserController::class, 'updateUser']);
+    //   Route::post('/subscription', [SubscriptionController::class, 'subscript']);
     
 });
 
