@@ -19,8 +19,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
+            'password' => 'required|min:6',
+            'c_password' => 'required|min:6|same:password',
         ]);
 
         if($validator->fails()){
@@ -84,8 +84,8 @@ class UserController extends Controller
      {
            //Data validation
            $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'email',
+            'password' => 'min:6|confirmed'
            
         ]);
 
@@ -104,6 +104,15 @@ class UserController extends Controller
                 'email' => $request->email ?? $user->email
                 
             ]);
+
+            if($request->password){
+                $pasword =  bcrypt($request->password);
+
+                DB::table('users')->where('email', $email)->update([
+                    'password' => $pasword   
+                ]);
+
+            }
 
             return response()->json([
                 "status" => true,

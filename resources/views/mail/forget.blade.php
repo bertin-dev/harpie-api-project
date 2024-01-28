@@ -8,6 +8,6 @@
 <body>
     Hi <br/>
     Change your password <a href="http://localhost:8000/reset/{{$data}}">click here</a><br/>
-    pincodw : {{$data}}
+    resetcode : <strong>{{$data}}</strong>
 </body>
 </html>
