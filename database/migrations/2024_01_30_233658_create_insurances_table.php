@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('insurance_companies', function (Blueprint $table) {
+        Schema::create('insurances', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('price');
-            $table->string('adresse');
-            $table->string('phone');
+            $table->float('pricing'); //tarif
+            $table->unsignedBigInteger('compagnie_id');
+            $table->foreign('compagnie_id')->references('id')->on('insurance_companies');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('insurance_companies');
+        Schema::dropIfExists('insurances');
     }
 };
